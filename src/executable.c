@@ -25,7 +25,7 @@ void dealloc_exe(Executable * exe)
 
 long load_exe(char * file_name, Executable * exe)
 {
-    exe->data_size = load_data(file_name, exe->bin_data);
+    exe->data_size = load_data(file_name, &exe->bin_data);
 
     return exe->data_size;
 }

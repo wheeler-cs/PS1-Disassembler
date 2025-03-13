@@ -14,7 +14,7 @@
  * @return The size of the file (in bytes) loaded into memory.
  * @retval 0: Nothing was loaded from the file.
  */
-long load_data(char *, uint8_t *);
+long load_data(char *, uint8_t **);
 
 /**
  * @brief Get the size of the file referenced by the pointer, in bytes.

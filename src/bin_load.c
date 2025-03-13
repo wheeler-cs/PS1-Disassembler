@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 
-long load_data(char * file_name, uint8_t * data_buffer)
+long load_data(char * file_name, uint8_t ** data_buffer)
 {
     FILE * file_in;
     long file_size;
@@ -13,17 +13,10 @@ long load_data(char * file_name, uint8_t * data_buffer)
     if((file_in = fopen(file_name, "rb")) != NULL)
     {
         // Allocate memory for loading
-        long file_size;
         file_size = get_file_size(file_in);
-        data_buffer = malloc(file_size);
+        *data_buffer = (uint8_t *)malloc(file_size);
 
-        // Couldn't read file
-        if(fread(data_buffer, 1, file_size, file_in) <= 0)
-        {
-            free(data_buffer);
-            data_buffer = NULL;
-            file_size = 0;
-        }
+        fread(*data_buffer, file_size, 1, file_in);
 
         fclose(file_in);
     }

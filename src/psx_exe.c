@@ -3,6 +3,18 @@
 #include <stdio.h>
 #include <string.h>
 
+
+ExeHeader get_header(Executable * exe)
+{
+    ExeHeader header_data;
+    if((long unsigned int)exe->data_size >= sizeof(ExeHeader))
+    {
+        memcpy(&header_data, exe->bin_data, sizeof(ExeHeader));
+    }
+    return header_data;
+}
+
+
 uint32_t validate_exe(Executable * exe)
 {
     uint32_t failed_checks;

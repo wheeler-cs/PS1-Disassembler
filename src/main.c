@@ -1,23 +1,23 @@
 #include "bin_load.h"
+#include "disassemble.h"
 #include "executable.h"
-#include "mips.h"
 #include "psx_exe.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char ** argv)
 {
     Executable ps1_exe;
     blankinit_exe(&ps1_exe);
     load_exe(argv[1], &ps1_exe);
-    uint32_t failed_checks;
-    failed_checks = validate_exe(&ps1_exe);
-    ExeHeader header_data;
-    if(!(failed_checks))
+
+    Disassembler * disasm;
+    disasm = disassemble(&ps1_exe);
+
+    if(disasm != NULL)
     {
-        header_data = get_header(&ps1_exe);
-        printf("Addr Start: 0x%x\n", header_data.addr_start);
-        printf("Addr Text:  0x%x\n", header_data.addr_text);
-        printf("Size Text:  0x%x\n", header_data.size_text);
-        printf("Addr Stack: 0x%x\n", header_data.addr_stack);
+        free(disasm);
     }
     dealloc_exe(&ps1_exe);
 
